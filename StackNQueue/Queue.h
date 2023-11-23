@@ -53,8 +53,9 @@ void queue::push(int x){
 
 void queue::pop() {
 
-    int x = Front->data;
-    Front = Front->nxt;
+    node * aux = Front->nxt;
+    delete Front;
+    Front = aux;
 
 }
 
