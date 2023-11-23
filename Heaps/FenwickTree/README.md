@@ -77,7 +77,6 @@ The Fenwick Tree leverages the binary representation of indices to efficiently s
 3. **Dynamic Frequency Counting:**
    - Tracks frequency counts dynamically with efficient updates and queries.
 
-
 ## Complexities
 
 - **Time Complexity:**
@@ -88,8 +87,8 @@ The Fenwick Tree leverages the binary representation of indices to efficiently s
 - **Space Complexity:**
   - O(n)
 
-## Why Commutative Operation?
+## Why Invertible Operation?
 
-The Fenwick Tree relies on the property of commutativity, ensuring that the order of operation does not affect the result. This property is essential for correct cumulative calculations during updates and queries. Common examples of commutative operations include addition (`+`) and bitwise XOR (`^`).
+The Fenwick Tree relies on the property of invertibility, ensuring that each update operation has a corresponding inverse operation. This property is essential for correct cumulative calculations during updates and queries. Common examples of invertible operations include addition (`+` with subtraction) and bitwise XOR (`^` with itself).
 
 Feel free to explore the implementation and adapt it to suit your specific use cases!
