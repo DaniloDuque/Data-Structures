@@ -30,7 +30,6 @@ class Trie{
     public:
 
         Trie(){root = new node('\0');}
-
         void insert(string);
         bool search(string);
         void mostrar(){return display(root, 0);}
@@ -50,13 +49,12 @@ class Trie{
 
 void Trie::insert(string str){
 
-    int alpha;
     node * curr = root;
     for(int i = 0; i<str.size(); i++){
 
-        alpha = str[i] - 'a';
-        if(!curr->nxt[alpha]) curr->nxt[alpha] = new node(str[i]);
-        curr = curr->nxt[alpha];
+        char letter = str[i];
+        if(!curr->nxt[letter]) curr->nxt[letter] = new node(letter);
+        curr = curr->nxt[letter];
 
     }curr->end = true;
 
@@ -73,9 +71,9 @@ bool Trie::search(string s){
     node * curr = root;
     for(int i = 0; i<s.size(); i++){
 
-        int alpha = s[i]-'a';
-        if(!curr->nxt[alpha]) return false;
-        curr = curr->nxt[alpha];
+        char letter = s[i];
+        if(!curr->nxt[letter]) return false;
+        curr = curr->nxt[letter];
 
     }return curr->end;
 
