@@ -61,4 +61,12 @@ public class MaxHeap {
             } else return;
         }
     }
+
+
+    public int top(){
+        return heap.get(1);
+    }
+
+
+    
 }
