@@ -71,4 +71,12 @@ public class MinHeap {
             } else return;
         }
     }
+
+
+    public int top(){
+        return heap.get(1);
+    }
+
+
+    
 }
