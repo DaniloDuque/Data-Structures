@@ -25,3 +25,7 @@ Trie trees offer efficient insertion, deletion, and search operations. The time 
 
 5. **Contacts Applications**: Tries can be used to implement contact lists in phones, making it easy to search for contacts based on partial names.
 
+## Real-World usage
+
+https://github.com/Scrabble-OOP/Scrabble
+
