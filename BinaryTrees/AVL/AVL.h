@@ -1,4 +1,6 @@
-//This AVL implements a SET, which means, that there's no pair of elements with equal value
+
+//This AVL implements a SET, so there's no pair of nodes with equal data in the tree
+
 
 #include <iostream>
 using namespace std;
@@ -7,18 +9,18 @@ using namespace std;
 struct node {
     int data, height;
     node *par, *right, *left;
-    node(int str) : data(str), height(0), par(nullptr), right(nullptr), left(nullptr) {}
-    ~node() {}
+    
+    // Constructor
+    node(int x) : data(x), height(0), par(nullptr), right(nullptr), left(nullptr) {}
 };
 
-// AVL Tree class
+// AVL tree class
 class AVL {
-
     private:
-
         node* root;
+
+        // Private helper functions
         node* insert(node*, node*);
-        node* successor(node*);
         node* remove(node*, node*);
         node* remove(node*);
         node* rotateRight(node*);
@@ -27,35 +29,55 @@ class AVL {
         bool search(node*, node*);
         int height(node*);
         void display(node*, string, bool);
-
+    
     public:
-
         AVL() : root(nullptr) {}
 
-        // Public method to insert a value into the AVL tree
+        // Destructor
+        ~AVL() {
+            clear(root);
+        }
+
+        // Clears the AVL tree
+        void clear(node* r) {
+            if (r) {
+                clear(r->left);
+                clear(r->right);
+                delete r;
+            }
+        }
+
+        // Public interface for inserting a value into the AVL tree
         bool insert(int x) {
             node* newN = new node(x);
-            if(search(root, newN)) return false; // If a node with value x exists, return false
+            if (search(root, newN)) {
+                delete newN;
+                return false;
+            }
             root = insert(root, newN);
             return true;
         }
 
-        // Public method to remove a value from the AVL tree
+        // Public interface for removing a value from the AVL tree
         bool remove(int x) {
             node* newN = new node(x);
-            if (!search(root, newN)) return false; // If there's no node with value x, return false
+            if (!search(root, newN)) {
+                delete newN;
+                return false;
+            }
             root = remove(root, newN);
             return true;
         }
 
-        // Public method to check if a value exists in the AVL tree
-        bool search(int str) {
-            return search(root, new node(str));
+        // Public interface for searching a value in the AVL tree
+        bool search(int x) {
+            return search(root, new node(x));
         }
 
-        // Public method to display the AVL tree structure
-        void display() { return display(root, "", true); }
-
+        // Public interface for displaying the AVL tree
+        void display() {
+            display(root, "", true);
+        }
 };
 
 
@@ -64,12 +86,7 @@ class AVL {
 
 
 
-
-
-
-
-
-// Right rotation operation
+// Rotation to the left
 node* AVL::rotateLeft(node* r) {
     node* n = r->right;
     n->par = r->par;
@@ -82,7 +99,7 @@ node* AVL::rotateLeft(node* r) {
     return n;
 }
 
-// Left rotation operation
+// Rotation to the right
 node* AVL::rotateRight(node* r) {
     node* n = r->left;
     n->par = r->par;
@@ -104,7 +121,9 @@ node* AVL::rotateRight(node* r) {
 
 
 
-// Balancing operation to maintain AVL property
+
+
+// Balancing the AVL tree
 node* AVL::balance(node* r) {
     int bf = height(r->left) - height(r->right);
     if (bf > 1) {
@@ -127,7 +146,11 @@ node* AVL::balance(node* r) {
 
 
 
-// Insertion operation
+
+
+
+
+// Inserting a node into the AVL tree
 node* AVL::insert(node* r, node* newN) {
     if (!r) return newN;
     if (r->data < newN->data) {
@@ -147,9 +170,7 @@ node* AVL::insert(node* r, node* newN) {
 
 
 
-
-
-// Finding the most right node from r
+// Finding the successor of a node
 node* AVL::successor(node* r) {
     if (!r->right) return new node(r->data);
     return successor(r->right);
@@ -161,7 +182,10 @@ node* AVL::successor(node* r) {
 
 
 
-// Removal operation
+
+
+
+// Removing a node from the AVL tree
 node* AVL::remove(node* r) {
     if (!r->right && !r->left) {
         delete r;
@@ -187,23 +211,19 @@ node* AVL::remove(node* r) {
 
 
 
-// Removal operation (overloaded)
-node* AVL::remove(node* r, node* str) {
+
+
+
+// Removing a node with a specific value from the AVL tree
+node* AVL::remove(node* r, node* newN) {
     if (!r) return r;
-    if (r->data == str->data) return r = remove(r);
-    (r->data < str->data) ? r->right = remove(r->right, str) : r->left = remove(r->left, str);
+    if (r->data == newN->data) return r = remove(r);
+    (r->data < newN->data) ? r->right = remove(r->right, newN) : r->left = remove(r->left, newN);
     r->height = max(height(r->left), height(r->right)) + 1;
     return balance(r);
 }
 
-
-
-
-
-
-
-
-// Height calculation
+// Finding the height of a node
 int AVL::height(node* r) {
     if (!r) return -1;
     return r->height;
@@ -218,7 +238,9 @@ int AVL::height(node* r) {
 
 
 
-// Search operation
+
+
+// Searching for a node with a specific value in the AVL tree
 bool AVL::search(node* r, node* newN) {
     if (!r || !newN) return false;
     if (r->data == newN->data) return true;
@@ -233,7 +255,10 @@ bool AVL::search(node* r, node* newN) {
 
 
 
-// Display the AVL tree structure
+
+
+
+// Displaying the AVL tree in a tree-like structure
 void AVL::display(node* r, string prefix, bool isLeft) {
     if (!r) return;
     cout << prefix;
