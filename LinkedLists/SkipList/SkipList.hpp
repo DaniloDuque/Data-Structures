@@ -17,9 +17,6 @@ struct node {
     }
 };
 
-
-
-
 class SkipList {
 
     private:
