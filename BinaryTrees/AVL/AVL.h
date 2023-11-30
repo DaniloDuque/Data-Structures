@@ -23,6 +23,7 @@ class AVL {
         node* insert(node*, node*);
         node* remove(node*, node*);
         node* remove(node*);
+        node* successor(node*);
         node* rotateRight(node*);
         node* rotateLeft(node*);
         node* balance(node*);
