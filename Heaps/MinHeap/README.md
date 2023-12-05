@@ -44,6 +44,8 @@ Min Heaps are commonly used in scenarios where quick retrieval of the minimum el
 
 3. **Huffman Coding:** Min Heaps are used in Huffman coding, a widely used algorithm for lossless data compression.
 
+4. **A * algorithm:** Min heaps are usually paired with an heuristic function to implement A*, example: https://github.com/DaniloDuque/8-puzzle
+
 ## Complexity
 
 - **Time Complexity:**
