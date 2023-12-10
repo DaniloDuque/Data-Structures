@@ -14,7 +14,7 @@ A Skip List is a probabilistic data structure designed for efficient search, ins
 
 ### Space Complexity
 
-- **O(2n):** The average space complexity of a Skip List is 2n (where n is the cardinality of level 0). On average, each level contains half the number of nodes as its previous level, represented by the formula &Sigma; from i=0 to &infin; of (1/(2^i))*n, which equals 2n, assuming an infinite number of levels.
+- **O(n):** The average space complexity of a Skip List is 2n (where n is the cardinality of level 0). On average, each level contains half the number of nodes as its previous level, represented by the formula &Sigma; from i=0 to &infin; of (1/(2^i))*n, which equals 2n, assuming an infinite number of levels.
 
 ## How it Works
 
