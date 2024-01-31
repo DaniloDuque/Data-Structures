@@ -31,7 +31,9 @@ class FenwickTree {
 
 FenwickTree::FenwickTree(vector<int>& values) {
 
-    Tree = (int*)calloc(values.size() + 1, sizeof(int));
+    size = values.size() + 1;
+        
+    Tree = (int*)calloc(size, sizeof(int));
 
     for (int i = 1; i <= size; i++) Tree[i] = values[i - 1]; // Copy values to the FenwickTree
 
