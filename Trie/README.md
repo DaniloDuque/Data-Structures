@@ -27,5 +27,4 @@ Trie trees offer efficient insertion, deletion, and search operations. The time 
 
 ## Real-World usage
 
-https://github.com/Scrabble-OOP/Scrabble
-
+https://github.com/DaniloDuque/Scrabble-OOP
