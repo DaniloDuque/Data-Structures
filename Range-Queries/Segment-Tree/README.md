@@ -53,4 +53,42 @@ The Segment Tree builds a binary tree where each leaf node represents an element
 
 The Segment Tree relies on the concept of a total order for the array elements. A total order is a relation that is reflexive, antisymmetric, transitive, and total. This ensures a well-defined comparison between elements, allowing for accurate aggregation and comparison operations within the tree.
 
+## Usage
+
+### C++
+
+1. **Initialization:**
+   ```cpp
+   SegmentTree segTree(size, neutral_value, operation);
+   segTree.init(array);
+   ```
+
+2. **Query:**
+   ```cpp
+   int result = segTree.query(left, right);
+   ```
+
+3. **Update:**
+   ```cpp
+   segTree.update(index, new_value);
+   ```
+
+### Java
+
+1. **Initialization:**
+   ```java
+   SegmentTree segTree = new SegmentTree(size, neutral_value, operation);
+   segTree.init(array);
+   ```
+
+2. **Query:**
+   ```java
+   int result = segTree.query(left, right);
+   ```
+
+3. **Update:**
+   ```java
+   segTree.update(index, new_value);
+   ```
+
 Feel free to explore the implementation and adapt it to suit your specific use cases!

@@ -1,75 +1,39 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.function.BinaryOperator;
 
+class SegmentTree {
 
-public class SegmentTree{
+    private int[] st;
+    private int n, NEUT;
+    private BinaryOperator<Integer> fun;
 
-
-    private int Tree[];
-
-    private int size;
-
-    public SegmentTree(List<Integer> vector){
-
-        size = vector.size();
-        Tree = new int[size<<1]; //for a segment tree we need 2n-1 size array, n being the size of vector
-
-        for(int i = size; i<size<<1; ++i) Tree[i] = vector.get(i-size);    //We set the leaves of the segment tree, to be the values of the initial vector
-
-        for(int i = size-1; i>0; --i)  Tree[i] = Math.max(Tree[i<<1], Tree[(i<<1)+1]);  // makes the predecessor of Tree[2i] and Tree[2i+1] = maximum between both
-
+    private void init(int k, int s, int e, int[] a) {
+        if (s + 1 == e) { st[k] = a[s]; return; }
+        int m = (s + e) >> 1;
+        init(k << 1, s, m, a); init((k << 1) + 1, m, e, a);
+        st[k] = fun.apply(st[k << 1], st[(k << 1) + 1]);
     }
 
-
-
-    public void update(int index, int x){
-
-        index += size;
-        Tree[index] = x;
-
-        while(index > 0){
-
-            index >>= 1;
-
-            int newV = Math.max(Tree[index<<1], Tree[(index<<1) + 1]);
-
-            if(Tree[index] == newV) return; ///if the value updated, is not global max, then it reaches a point, where no more change needs to be made
-
-            Tree[index] = newV;
-
-        }
-        
-
+    private void upd(int k, int s, int e, int p, int v) {
+        if (s + 1 == e) { st[k] = v; return; }
+        int m = (s + e) >> 1;
+        if (p < m) upd(k << 1, s, m, p, v); else upd((k << 1) + 1, m, e, p, v);
+        st[k] = fun.apply(st[k << 1], st[(k << 1) + 1]);
     }
 
-
-
-    public int max(int start, int finish){
-
-        int max = -(1<<30);
-        start += size;
-        finish += size;
-
-        while (start < finish) {
-
-        if (start%2 == 1) {
-            max = Math.max(max, Tree[start]);
-            start++;
-        }
-        if (finish%2 == 1) {
-            finish--;
-            max = Math.max(max, Tree[finish]);
-        }
-        start >>= 1;
-        finish >>= 1;
-        
-        }return max;
-
-
+    private int query(int k, int s, int e, int a, int b) {
+        if (s >= b || e <= a) return NEUT;
+        if (s >= a && e <= b) return st[k];
+        int m = (s + e) >> 1;
+        return fun.apply(query(k << 1, s, m, a, b), query((k << 1) + 1, m, e, a, b));
     }
 
+    public SegmentTree(int sz, int neut, BinaryOperator<Integer> oper) {
+        n = sz; NEUT = neut; st = new int[4 * n + 5]; fun = oper;
+        for (int i = 0; i < st.length; i++) st[i] = NEUT;
+    }
 
-
-
-
+    public void init(int[] a) { init(1, 0, n, a); }
+    public void upd(int i, int v) { upd(1, 0, n, i, v); }
+    public int query(int i, int j) { return query(1, 0, n, i, j); }
 }
+

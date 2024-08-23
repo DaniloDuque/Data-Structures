@@ -1,122 +1,36 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+class SegmentTree{
 
-class SegmentTree {
+private:
+    vector<int> st; int n, NEUT;
+    function<int(int, int)>fun;
 
-    private:
-        vector<int> Tree;
-        int size;
+    void init(int k, int s, int e, int *a){
+        if(s+1 == e){st[k]==a[s]; return;}
+        int m = (s+e)>>1;
+        init(k<<1, s, m, a); init((k<<1)+1, m, e, a);
+        st[k]=fun(st[k<<1], st[(k<<1)+1];
+    }
 
-    public:
-        SegmentTree(vector<int>&);
-        void build();
-        void display();
-        void update(int, int);
-        int Max(int, int);
+    void upd(int k, int s, int e, int p, int v){
+        if(s+1==e){st[k]==v; return;}
+        int m=(s+e)>>1;
+        (p<m)? upd(k<<1, s, m, p, v) : upd((k<<1)+1, m, e, p, v);
+        st[k]=fun(st[k<<1], st[(k<<1)+1]);
+    }
+
+    int query(int k, int s, int e, int a, int b){
+	    if(s>=b||e<=a)return NEUT;
+	    if(s>=a&&e<=b)return st[k];
+	    int m=(s+e)>>1;
+	    return fun(query(k<<1,s,m,a,b),query((k<<1)+1,m,e,a,b));
+    }
+ 
+public:
+    SegmentTree(int sz, int neut, function<int(int, int)> oper){
+        n = sz; NEUT = neut; st(4*n+5, NEUT); fun = oper; 
+    }
+    void init(int *a){init(1, 0, n, a);}
+    void upd(int i, int v){upd(1, 0, n, i, v);}
+    int query(int i, int j){return query(1, 0, n, i, j);}
 
 };
-
-
-
-
-
-
-
-
-
-SegmentTree::SegmentTree(vector<int>& values) {
-
-    size = values.size();
-    Tree.resize(2 * size);
-
-    for (int i = size; i < 2 * size; i++) Tree[i] = values[i - size];  //copies each value to the leaves of the segment tree
-
-    this->build();
-}
-
-
-
-
-
-
-
-
-void SegmentTree::build() {
-
-    for (int i = size - 1; i > 0; i--) 
-        Tree[i] = max(Tree[2 * i], Tree[2 * i + 1]); // makes the predecessor of Tree[2i] and Tree[2i+1] = maximum between both
-    
-}
-
-
-
-//updates the i'th value of the segment tree, also updating the path   O(logn)
-void SegmentTree::update(int i, int x) {
-
-    i += size;
-    Tree[i] = x;
-
-    while (i > 0){
-
-        i >>= 1;
-        int newV = max(Tree[2 * i], Tree[2 * i + 1]);
-
-        if(Tree[i] == newV) return;
-        
-        Tree[i] = newV;
-        
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-//returns the max value between i and f indexes
-int SegmentTree::Max(int i, int f){
-
-    int m = -(1 << 30);
-    i += size;
-    f += size;
-
-    while (i < f) {
-
-        if (i & 1) {
-            m = max(m, Tree[i]);
-            i++;
-        }
-        if (f & 1) {
-            f--;
-            m = max(m, Tree[f]);
-        }
-        i >>= 1;
-        f >>= 1;
-        
-    }return m;
-
-}
-
-
-
-
-
-
-
-
-
-
-void SegmentTree::display() {
-
-    for (int i = 1; i < 2 * size; i++) cout << Tree[i] << " ";
-    cout << endl;
-
-}
-
