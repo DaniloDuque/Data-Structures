@@ -32,14 +32,6 @@ class BST {
         bool search(int x) { return search(root, x); }
 };
 
-
-
-
-
-
-
-
-
 // Private helper function to insert a node into the BST
 node *BST::insert(node *r, node *newN) {
     if (!r) return newN;
@@ -50,33 +42,12 @@ node *BST::insert(node *r, node *newN) {
     return r;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 // Private helper function to get the minimum value from a subtree
 int BST::getMinValue(node *r) {
     if (!r->left)
         return r->data;
     return getMinValue(r->left);
 }
-
-
-
-
-
-
-
-
-
-
 
 // Private helper function to remove a node with a given value from the BST
 node *BST::remove(node *r, int x) {
@@ -99,17 +70,6 @@ node *BST::remove(node *r, int x) {
     return r;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 // Private helper function to search for a value in the BST
 bool BST::search(node *r, int x) {
     if (!r)
@@ -120,19 +80,6 @@ bool BST::search(node *r, int x) {
         return search(r->right, x);
     return search(r->left, x);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Private helper function to display the BST structure
 void BST::display(node *r, string prefix, bool isLeft) {
