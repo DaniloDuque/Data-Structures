@@ -10,11 +10,7 @@ public class MinHeap {
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
-
-
-
-
-  
+    
     private void heapify(int index) {
         int m = index, left = index << 1, right = (index << 1) + 1;
         if (left < heap.size() && heap.get(left) < heap.get(m)) m = left;
@@ -23,28 +19,16 @@ public class MinHeap {
         swap(m, index);
         heapify(m);
     }
-
-
-
-  
-
+    
     public MinHeap() {
         heap = new ArrayList<>();
         heap.add(-(1 << 30));  // This is to index the vector, starting from 1
     }
 
-
-
-  
-
     // this method creates a minheap out of a vector in O(n)
     public void heapify() {
         for (int i = heap.size() - 1; i > 0; i--) heapify(i);
     }
-
-
-
-  
 
     public void push(int x) {
         heap.add(x);
@@ -53,9 +37,6 @@ public class MinHeap {
             swap(i >> 1, i);
         }
     }
-
-
-  
 
     public void pop() {
         int i = 1;
@@ -72,11 +53,8 @@ public class MinHeap {
         }
     }
 
-
     public int top(){
         return heap.get(1);
     }
 
-
-    
 }
