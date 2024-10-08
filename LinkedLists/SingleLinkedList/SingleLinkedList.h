@@ -11,23 +11,14 @@ struct node {
     ~node() {}
 };
 
-
-
-
-
-
 class SingleLinkedList {
-
     private:
         node* head;
         void freeList();
         void appendnode(node*);
-
     public:
-
         SingleLinkedList() : head(nullptr) {}
         ~SingleLinkedList() {}
-
         void append(int);
         void insert(int, int);
         void push(int);
@@ -39,12 +30,6 @@ class SingleLinkedList {
         node* getFirst();
 };
 
-
-
-
-
-
-
 void SingleLinkedList::freeList() {
     if (!head) return;
     node* current = head->next;
@@ -55,16 +40,6 @@ void SingleLinkedList::freeList() {
     }
     head = nullptr; // Important: mark the head as NULL after freeing the nodes
 }
-
-
-
-
-
-
-
-
-
-
 
 //if asc != 0, sort in ascending order, else descending order
 void SingleLinkedList::sort(int asc) {
@@ -89,11 +64,6 @@ void SingleLinkedList::sort(int asc) {
     return;
 }
 
-
-
-
-
-
 void SingleLinkedList::appendnode(node* newnode) {
     if (!head) {
         head = newnode;
@@ -105,18 +75,9 @@ void SingleLinkedList::appendnode(node* newnode) {
     newnode->next = nullptr;
 }
 
-
-
-
-
-
-
-
 node* SingleLinkedList::getFirst() {
     return head;
 }
-
-
 
 void SingleLinkedList::shuffle() {
 
@@ -142,10 +103,6 @@ void SingleLinkedList::shuffle() {
         }
     }
 }
-
-
-
-
 
 int SingleLinkedList::remove(int index) {
     int value;
@@ -173,23 +130,11 @@ int SingleLinkedList::remove(int index) {
     return value;
 }
 
-
-
-
-
-
-
 void SingleLinkedList::push(int value) {
     node* newnode = new node(value);
     newnode->next = head;
     head = newnode;
 }
-
-
-
-
-
-
 
 void SingleLinkedList::insert(int index, int value) {
     if (!index) return push(value);
@@ -206,11 +151,6 @@ void SingleLinkedList::insert(int index, int value) {
     current->next = newnode;
 }
 
-
-
-
-
-
 int SingleLinkedList::size() {
     int count = 0;
     node* current = head;
@@ -220,10 +160,6 @@ int SingleLinkedList::size() {
     }
     return count;
 }
-
-
-
-
 
 void SingleLinkedList::append(int value) {
     node* newnode = new node(value);
@@ -236,14 +172,6 @@ void SingleLinkedList::append(int value) {
     current->next = newnode;
     newnode->next = nullptr;
 }
-
-
-
-
-
-
-
-
 
 void SingleLinkedList::display() {
     if (!head) return;
