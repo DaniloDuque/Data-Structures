@@ -1,7 +1,5 @@
 
 //This AVL implements a SET, so there's no pair of nodes with equal data in the tree
-
-
 #include <iostream>
 using namespace std;
 
@@ -81,12 +79,6 @@ class AVL {
         }
 };
 
-
-
-
-
-
-
 // Rotation to the left
 node* AVL::rotateLeft(node* r) {
     node* n = r->right;
@@ -113,17 +105,6 @@ node* AVL::rotateRight(node* r) {
     return n;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 // Balancing the AVL tree
 node* AVL::balance(node* r) {
     int bf = height(r->left) - height(r->right);
@@ -140,17 +121,6 @@ node* AVL::balance(node* r) {
     return r;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 // Inserting a node into the AVL tree
 node* AVL::insert(node* r, node* newN) {
     if (!r) return newN;
@@ -165,26 +135,11 @@ node* AVL::insert(node* r, node* newN) {
     return balance(r);
 }
 
-
-
-
-
-
-
 // Finding the successor of a node
 node* AVL::successor(node* r) {
     if (!r->right) return new node(r->data);
     return successor(r->right);
 }
-
-
-
-
-
-
-
-
-
 
 // Removing a node from the AVL tree
 node* AVL::remove(node* r) {
@@ -206,15 +161,6 @@ node* AVL::remove(node* r) {
     return r;
 }
 
-
-
-
-
-
-
-
-
-
 // Removing a node with a specific value from the AVL tree
 node* AVL::remove(node* r, node* newN) {
     if (!r) return r;
@@ -230,17 +176,6 @@ int AVL::height(node* r) {
     return r->height;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 // Searching for a node with a specific value in the AVL tree
 bool AVL::search(node* r, node* newN) {
     if (!r || !newN) return false;
@@ -248,16 +183,6 @@ bool AVL::search(node* r, node* newN) {
     if (r->data < newN->data) return search(r->right, newN);
     return search(r->left, newN);
 }
-
-
-
-
-
-
-
-
-
-
 
 // Displaying the AVL tree in a tree-like structure
 void AVL::display(node* r, string prefix, bool isLeft) {
