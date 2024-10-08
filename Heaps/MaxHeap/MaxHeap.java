@@ -12,14 +12,12 @@ public class MaxHeap {
     }
 
     private void heapify(int index) {
-
         int m = index, left = index << 1, right = (index << 1) + 1;
         if (left < heap.size() && heap.get(left) > heap.get(m)) m = left;
         if (right < heap.size() && heap.get(right) > heap.get(m)) m = right;
         if (index == m) return;
         swap(m, index);
         heapify(m);
-
     }
 
     public MaxHeap() {
@@ -27,14 +25,10 @@ public class MaxHeap {
         heap.add(1 << 30);  // This is to index the vector, starting from 1
     }
 
-
     // this method creates a maxheap out of a vector in O(n)
     public void heapify() {
         for (int i = heap.size() - 1; i > 0; i--) heapify(i);
     }
-
-
-
 
     public void push(int x) {
         heap.add(x);
@@ -43,9 +37,6 @@ public class MaxHeap {
             swap(i >> 1, i);
         }
     }
-
-
-
 
     public void pop() {
         int i = 1;
@@ -62,11 +53,8 @@ public class MaxHeap {
         }
     }
 
-
     public int top(){
         return heap.get(1);
     }
-
-
     
 }
