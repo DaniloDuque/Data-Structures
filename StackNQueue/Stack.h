@@ -1,65 +1,38 @@
-#include <iostream>
-using namespace std;
-
-
-
-
-struct node{
-
-    int data;
-    node * nxt;
-    node(int x): data(x), nxt(nullptr){}
-    ~node(){}
-
+template <typename T>
+struct Node {
+    T data;
+    Node* nxt;
+    Node(T x) : data(x), nxt(nullptr) {}
+    ~Node() {}
 };
 
+template <typename T>
+class Stack {
+private:
+    Node<T>* Top;
 
+public:
+    Stack() : Top(nullptr) {}
 
-class stack{
+    void push(T x) {
+        Node<T>* newN = new Node<T>(x);
+        newN->nxt = Top;
+        Top = newN;
+    }
 
-    private:
+    void pop() {
+        if (Top) {
+            Node<T>* aux = Top->nxt;
+            delete Top;
+            Top = aux;
+        }
+    }
 
-        node * Top;
+    T top() {
+        return Top ? Top->data : T(); // Return default value of T if stack is empty
+    }
 
-    
-    public:
-
-        void push(int);
-        void pop();
-        int top();
-        bool empty();
-
+    bool empty() {
+        return !Top;
+    }
 };
-
-
-
-
-void stack::push(int x){
-
-    node * newN = new node(x);
-    newN->nxt = Top;
-    Top = newN;
-    
-}
-
-
-void stack::pop(){
-
-    node * aux = Top->nxt;
-    delete Top;
-    Top = aux;
-
-}
-
-
-int stack::top(){
-
-    return Top->data;
-
-}
-
-bool stack::empty(){
-
-    return !Top;
-
-}
