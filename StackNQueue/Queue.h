@@ -1,67 +1,47 @@
-#include <iostream>
-using namespace std;
-
-
-
-struct node{
-
-    int data;
-    node *nxt;
-    node(int x): data(x), nxt(nullptr){}
+template <typename T>
+struct node {
+    T data;
+    node* nxt;
+    node(T x) : data(x), nxt(nullptr) {}
     ~node() {}
-
 };
 
+template <typename T>
+class Queue {
+private:
+    node<T>* Front;
+    node<T>* Back;
 
+public:
+    Queue() : Front(nullptr), Back(nullptr) {}
 
-class queue{
-
-
-    private:
-
-        node * Front;
-        node * Back;
-
-
-    public:
-
-        queue(): Front(nullptr), Back(nullptr){}
-        void push(int);
-        void pop();
-        int front();
-        bool empty(){return !Front;}
-
-};
-
-
-
-void queue::push(int x){
-
-    node * newN = new node(x);
-    if(!Front){
-
-        Front = newN;
+    void push(T x) {
+        node<T>* newN = new node<T>(x);
+        if (!Front) {
+            Front = newN;
+            Back = newN;
+            return;
+        }
+        Back->nxt = newN;
         Back = newN;
-        return;
+    }
 
-    }Back->nxt = newN;
-    Back = newN;
-    return;
+    void pop() {
+        if (Front) {
+            node<T>* aux = Front->nxt;
+            delete Front;
+            Front = aux;
+        }
+    }
 
-}
+    T front() {
+        if (Front) {
+            return Front->data;
+        }
+        throw std::runtime_error("Queue is empty");
+    }
 
-
-void queue::pop() {
-
-    node * aux = Front->nxt;
-    delete Front;
-    Front = aux;
-
-}
-
-
-int queue::front(){
-
-    return Front->data;
-    
-}
+    bool empty() {
+        return !Front;
+    }
+};
