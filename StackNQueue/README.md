@@ -1,6 +1,6 @@
 # Stack and Queue Implementation
 
-This repository contains implementations of two fundamental data structures: Stack and Queue. These structures are essential in computer science and have various applications in algorithm design, simulation, and solving problems in a wide range of domains.
+This repository contains implementations of two fundamental data structures: Stack and Queue. These structures are essential in computer science and have various applications in algorithm design, simulation, and solving problems in a wide range of domains. Both implementations support generic types, allowing them to store any type of data.
 
 ## Stack
 
@@ -10,11 +10,11 @@ A Stack is a Last In, First Out (LIFO) data structure, where the last element ad
 
 ### Implementation Details
 
-#### `Stack` Class
+#### `Stack<T>` Class
 
-The `Stack` class encapsulates the stack implementation. It provides the following methods:
+The `Stack<T>` class encapsulates the stack implementation for any data type. It provides the following methods:
 
-- `push(int x)`: Adds element `x` to the top of the stack.
+- `push(T x)`: Adds element `x` to the top of the stack.
 - `pop()`: Removes the top element from the stack.
 - `top()`: Returns the value of the top element without removing it.
 - `empty()`: Checks if the stack is empty.
@@ -22,7 +22,7 @@ The `Stack` class encapsulates the stack implementation. It provides the followi
 ### Usage
 
 ```cpp
-Stack stack;
+Stack<int> stack;
 stack.push(5);
 stack.push(10);
 int topValue = stack.top(); // Returns 10
@@ -38,11 +38,11 @@ A Queue is a First In, First Out (FIFO) data structure, where the first element 
 
 ### Implementation Details
 
-#### `Queue` Class
+#### `Queue<T>` Class
 
-The `Queue` class encapsulates the queue implementation. It provides the following methods:
+The `Queue<T>` class encapsulates the queue implementation for any data type. It provides the following methods:
 
-- `push(int x)`: Adds element `x` to the rear of the queue.
+- `push(T x)`: Adds element `x` to the rear of the queue.
 - `pop()`: Removes the front element from the queue.
 - `front()`: Returns the value of the front element without removing it.
 - `empty()`: Checks if the queue is empty.
@@ -50,7 +50,7 @@ The `Queue` class encapsulates the queue implementation. It provides the followi
 ### Usage
 
 ```cpp
-Queue queue;
+Queue<int> queue;
 queue.push(3);
 queue.push(7);
 int frontValue = queue.front(); // Returns 3
@@ -81,4 +81,3 @@ bool isEmpty = queue.empty(); // Returns false
 ## Contributing
 
 Feel free to contribute to this repository by submitting bug reports, feature requests, or pull requests. Your contributions are highly appreciated!
-
