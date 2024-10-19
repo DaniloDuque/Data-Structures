@@ -1,55 +1,46 @@
-public class Queue {
+public class Queue<T> {
 
-    private class node {
+    private class Node {
+        T data;
+        Node next;
 
-        int data;
-        node next;
-
-        node(int x) {
+        Node(T x) {
             data = x;
             next = null;
         }
     }
 
-    private node front;
-    private node back;
+    private Node front;
+    private Node back;
 
     public Queue() {
-
         front = null;
         back = null;
     }
 
-
-    public void push(int x) {
-
-        node newnode = new node(x);
+    public void push(T x) {
+        Node newNode = new Node(x);
         if (front == null) {
-            front = newnode;
-            back = newnode;
+            front = newNode;
+            back = newNode;
             return;
         }
-        
-        back.next = newnode;
-        back = newnode;
-        
+        back.next = newNode;
+        back = newNode;
     }
 
     public void pop() {
-
         if (front != null) {
-            node temp = front.next;
+            Node temp = front.next;
             front = temp;
         }
     }
 
-    public int front() {
-        return front != null ? front.data : -1; // Return -1 if the Queue is empty
+    public T front() {
+        return front != null ? front.data : null; // Return null if the Queue is empty
     }
 
     public boolean isEmpty() {
         return front == null;
     }
-
-
 }
