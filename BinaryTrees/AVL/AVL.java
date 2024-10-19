@@ -1,50 +1,49 @@
-public class AVL {
+public class AVL<T extends Comparable<T>> {
 
-    private class node {
-        int data;
+    private class Node {
+        T data;
         int height;
-        node pred, left, right;
-        node(int x) {
+        Node pred, left, right;
+
+        Node(T x) {
             data = x;
             height = 0;
             left = right = pred = null;
         }
     }
-    
-    private node root;
-    
-    private int height(node root) {
+
+    private Node root;
+
+    private int height(Node root) {
         if (root == null) return -1;
         return root.height;
     }
-    
-    private node rotateRight(node root) {
-        node aux = root.left;
+
+    private Node rotateRight(Node root) {
+        Node aux = root.left;
         aux.pred = root.pred;
         root.pred = aux;
         root.left = aux.right;
         if (aux.right != null) aux.right.pred = root;
         aux.right = root;
-        // Update the height of the affected nodes
         root.height = 1 + Math.max(height(root.left), height(root.right));
         aux.height = 1 + Math.max(height(aux.left), height(aux.right));
         return aux;
     }
 
-    private node rotateLeft(node root) {
-        node aux = root.right;
+    private Node rotateLeft(Node root) {
+        Node aux = root.right;
         aux.pred = root.pred;
         root.pred = aux;
         root.right = aux.left;
         if (aux.left != null) aux.left.pred = root;
         aux.left = root;
-        // Update the height of the affected nodes
         root.height = 1 + Math.max(height(root.left), height(root.right));
         aux.height = 1 + Math.max(height(aux.left), height(aux.right));
         return aux;
     }
 
-    private node balance(node root) {
+    private Node balance(Node root) {
         int balanceFactor = height(root.left) - height(root.right);
         if (balanceFactor > 1) {
             if (height(root.left.left) - height(root.left.right) >= 1) return rotateRight(root);
@@ -59,12 +58,12 @@ public class AVL {
         return root;
     }
 
-    private node insert(node root, node newN) {
+    private Node insert(Node root, Node newN) {
         if (root == null) {
             newN.height = 0;
             return newN;
         }
-        if (root.data < newN.data) {
+        if (root.data.compareTo(newN.data) < 0) {
             root.right = insert(root.right, newN);
             root.right.pred = root;
         } else {
@@ -75,16 +74,16 @@ public class AVL {
         return balance(root);
     }
 
-    private node remove(node root, node elim) {
+    private Node remove(Node root, Node elim) {
         if (root == null) return null;
-        if (root.data == elim.data) return root = remove(root);
-        if (root.data < elim.data) root.right = remove(root.right, elim);
+        if (root.data.compareTo(elim.data) == 0) return root = remove(root);
+        if (root.data.compareTo(elim.data) < 0) root.right = remove(root.right, elim);
         else root.left = remove(root.left, elim);
         root.height = 1 + Math.max(height(root.left), height(root.right));
         return balance(root);
     }
 
-    private node remove(node root) {
+    private Node remove(Node root) {
         if (root.right == null && root.left == null) return null;
         if (root.right != null && root.left == null) {
             root.right.pred = root.pred;
@@ -94,25 +93,25 @@ public class AVL {
             root.left.pred = root.pred;
             return root.left;
         }
-        node temp = successor(root.left);
+        Node temp = successor(root.left);
         root.data = temp.data;
         root.left = remove(root.left, temp);
         return balance(root);
     }
 
-    private node successor(node root) {
+    private Node successor(Node root) {
         if (root.right == null) return root;
         return successor(root.right);
     }
 
-    private boolean search(node root, int x) {
+    private boolean search(Node root, T x) {
         if (root == null) return false;
-        if (root.data == x) return true;
-        if (root.data < x) return search(root.right, x);
+        if (root.data.compareTo(x) == 0) return true;
+        if (root.data.compareTo(x) < 0) return search(root.right, x);
         return search(root.left, x);
     }
 
-    private void display(node root, String prefix, boolean isLeft) {
+    private void display(Node root, String prefix, boolean isLeft) {
         if (root == null) return;
         System.out.print(prefix);
         System.out.print(isLeft ? "├──" : "└──");
@@ -125,15 +124,15 @@ public class AVL {
         root = null;
     }
 
-    public void insert(int x) {
-        root = insert(root, new node(x));
+    public void insert(T x) {
+        root = insert(root, new Node(x));
     }
 
-    public void remove(int x) {
-        root = remove(root, new node(x));
+    public void remove(T x) {
+        root = remove(root, new Node(x));
     }
 
-    public boolean search(int x) {
+    public boolean search(T x) {
         return search(root, x);
     }
 
