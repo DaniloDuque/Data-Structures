@@ -105,8 +105,8 @@ public static void main(String[] args) {
 Create the heap with a custom comparator function in the constructor to define whether it is a **Max Heap** or **Min Heap**.
 
 ```cpp
-auto maxHeap = MaxHeap([](int a, int b) { return a > b; });
-auto minHeap = MaxHeap([](int a, int b) { return a < b; });
+auto maxHeap = Heap([](int a, int b) { return a > b; });
+auto minHeap = Heap([](int a, int b) { return a < b; });
 ```
 
 #### Insertion
