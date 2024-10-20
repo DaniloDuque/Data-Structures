@@ -1,121 +1,65 @@
-#include <iostream>
-#include <string>
-#include <unordered_map>
-using namespace std;
-
-
-struct node{
-
-    char data;
-    unordered_map<char, node*> nxt;
-    bool end;
-    node(char d): data(d), end(false){}
-    ~node(){}
-
-};
-
-
-
-
-
-
-class Trie{
-
-    private:
-
-        node * root;
-        void display(node *, int);
-
-
+class Trie {
+private:
+    class Node {
     public:
+        char data;
+        unordered_map<char, Node*> children;
+        bool isEndOfWord;
 
-        Trie(){root = new node('\0');}
-        void insert(string);
-        bool search(string);
-        void mostrar(){return display(root, 0);}
+        Node(char d) : data(d), isEndOfWord(false) {}
+        ~Node() {}
+    };
 
+    Node* root;
 
-
-        
-};
-
-
-
-
-
-
-
-
-
-void Trie::insert(string str){
-
-    node * curr = root;
-    for(int i = 0; i<str.size(); i++){
-
-        char letter = str[i];
-        if(!curr->nxt[letter]) curr->nxt[letter] = new node(letter);
-        curr = curr->nxt[letter];
-
-    }curr->end = true;
-
-}
-
-
-
-
-
-
-
-bool Trie::search(string s){
-
-    node * curr = root;
-    for(int i = 0; i<s.size(); i++){
-
-        char letter = s[i];
-        if(!curr->nxt[letter]) return false;
-        curr = curr->nxt[letter];
-
-    }return curr->end;
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void Trie::display(node* r, int niv) {
-
-    if (r) {
-
-        for (int i = 0; i < niv; i++) {
-            cout << "  ";
+    Node* findNode(const string& str) {
+        Node* currentNode = root;
+        for (char letter : str) {
+            if (!currentNode->children[letter]) {
+                return nullptr;
+            }
+            currentNode = currentNode->children[letter];
         }
-        if (r->data == '\0') {
-            cout << "-->NULL" << endl;
-        } else {
-            cout << "-->" << r->data << endl;
-        }
+        return currentNode;
+    }
 
-        for (int i = 0; i < 27; ++i) {
-            display(r->nxt[i], niv + 1);
+    void display(Node* currentNode, int level) {
+        if (currentNode) {
+            for (int i = 0; i < level; ++i) {
+                cout << "  ";
+            }
+            if (currentNode->data == '\0') {
+                cout << "-->NULL" << endl;
+            } else {
+                cout << "-->" << currentNode->data << endl;
+            }
+
+            for (auto& child : currentNode->children) {
+                display(child.second, level + 1);
+            }
         }
     }
-}
 
+public:
+    Trie() { root = new Node('\0'); }
+
+    void insert(const string& word) {
+        Node* currentNode = root;
+        for (char letter : word) {
+            if (!currentNode->children[letter]) {
+                currentNode->children[letter] = new Node(letter);
+            }
+            currentNode = currentNode->children[letter];
+        }
+        currentNode->isEndOfWord = true;
+    }
+
+    bool search(const string& word) {
+        Node* currentNode = findNode(word);
+        return currentNode != nullptr && currentNode->isEndOfWord;
+    }
+
+    void display() {
+        display(root, 0);
+    }
+};
