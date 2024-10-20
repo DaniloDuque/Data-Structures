@@ -1,71 +1,48 @@
 import java.util.HashMap;
 
+public class Trie {
 
-public class Trie{
+    private static final char ROOT_CHAR = '\0';
 
+    private static class Node {
+        private char data;
+        private boolean isEndOfWord;
+        private HashMap<Character, Node> children;
 
-    private class node{
-        
-        char data;
-        boolean isEnd;
-        HashMap<Character,node> children;
-
-        node(char data){
+        public Node(char data) {
             this.data = data;
-            this.isEnd = false;
+            this.isEndOfWord = false;
             this.children = new HashMap<>();
         }
-
     }
 
-    private node root;
+    private Node root;
 
-    public Trie(){
-            
-        this.root = new node('\0');
-
+    public Trie() {
+        this.root = new Node(ROOT_CHAR);
     }
 
-
-    public void insert(String word){
-
-        node curr = root;
-
-        for(int i = 0; i<word.length(); i++){
-
-            char ch = word.charAt(i);
-
-            if(!curr.children.containsKey(ch))
-                
-                curr.children.put(ch,new node(ch));
-
-            curr = curr.children.get(ch);
-            
-        }curr.isEnd = true;
-
+    public void insert(String word) {
+        Node currentNode = root;
+        for (char ch : word.toCharArray()) {
+            currentNode = currentNode.children.computeIfAbsent(ch, c -> new Node(c));
+        }
+        currentNode.isEndOfWord = true;
     }
 
-
-
-    public boolean search(String word){
-
-        node curr = root;
-
-        for(int i = 0; i<word.length(); i++){
-
-            char ch = word.charAt(i);
-
-            if(!curr.children.containsKey(ch))
-                
-                return false;
-
-            curr = curr.children.get(ch);
-            
-        }return curr.isEnd;
-
+    public boolean search(String word) {
+        Node currentNode = findNode(word);
+        return currentNode != null && currentNode.isEndOfWord;
     }
 
-
-
+    private Node findNode(String word) {
+        Node currentNode = root;
+        for (char ch : word.toCharArray()) {
+            currentNode = currentNode.children.get(ch);
+            if (currentNode == null) {
+                return null;
+            }
+        }
+        return currentNode;
+    }
 }
-
